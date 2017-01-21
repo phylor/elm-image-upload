@@ -4,7 +4,6 @@ The code in this repository is taken from a [blog post](https://www.paramander.c
 
 ## Run it
 
-    elm make Main.elm --output=elm.js
     elm reactor
     
 Go to `http://localhost:8000` and click on `index.html`.
