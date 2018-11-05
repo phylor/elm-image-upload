@@ -1,4 +1,4 @@
-port module Ports exposing (..)
+port module Ports exposing (ImagePortData, fileContentRead, fileSelected)
 
 
 type alias ImagePortData =
