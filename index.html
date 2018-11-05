@@ -6,9 +6,12 @@
 </head>
 
 <body>
-  <script type="text/javascript" src="/_compile/Main.elm"></script>
+  <div id="app"></div>
+  <script type="text/javascript" src="elm.js"></script>
   <script type="text/javascript">
-    var app = Elm.Main.fullscreen();
+    var app = Elm.Main.init({
+        node: document.getElementById("app")
+    });
 
     app.ports.fileSelected.subscribe(function (id) {
       var node = document.getElementById(id);

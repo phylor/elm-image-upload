@@ -1,10 +1,21 @@
-module Main exposing (..)
+module Main exposing
+    ( Image
+    , Model
+    , Msg(..)
+    , init
+    , main
+    , subscriptions
+    , update
+    , view
+    , viewImagePreview
+    )
 
+import Browser
 import Html exposing (..)
-import Html.Attributes exposing (src, title, class, id, type_)
+import Html.Attributes exposing (class, id, src, title, type_)
 import Html.Events exposing (on)
 import Json.Decode as JD
-import Ports exposing (ImagePortData, fileSelected, fileContentRead)
+import Ports exposing (ImagePortData, fileContentRead, fileSelected)
 
 
 type Msg
@@ -24,9 +35,9 @@ type alias Model =
     }
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    program
+    Browser.element
         { init = init
         , update = update
         , view = view
@@ -34,8 +45,8 @@ main =
         }
 
 
-init : ( Model, Cmd Msg )
-init =
+init : flags -> ( Model, Cmd Msg )
+init _ =
     ( { id = "ImageInputId"
       , mImage = Nothing
       }
@@ -58,9 +69,9 @@ update msg model =
                     , filename = data.filename
                     }
             in
-                ( { model | mImage = Just newImage }
-                , Cmd.none
-                )
+            ( { model | mImage = Just newImage }
+            , Cmd.none
+            )
 
 
 view : Model -> Html Msg
@@ -74,16 +85,16 @@ view model =
                 Nothing ->
                     text ""
     in
-        div [ class "imageWrapper" ]
-            [ input
-                [ type_ "file"
-                , id model.id
-                , on "change"
-                    (JD.succeed ImageSelected)
-                ]
-                []
-            , imagePreview
+    div [ class "imageWrapper" ]
+        [ input
+            [ type_ "file"
+            , id model.id
+            , on "change"
+                (JD.succeed ImageSelected)
             ]
+            []
+        , imagePreview
+        ]
 
 
 viewImagePreview : Image -> Html Msg
